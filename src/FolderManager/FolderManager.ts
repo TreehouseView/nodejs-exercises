@@ -107,6 +107,14 @@ class FolderNode {
             );
         }
 
+        // Here we are creating a copy of the children
+        // excluding the node we want to delete.
+        // Not a very efficient solution if we're dealing
+        // with a large folder tree.
+        //
+        // This is where a map would shine because
+        // we would have the ability to remove child
+        // nodes easily and efficiently
         const newChildren: Array<FolderNode> = [];
         parentFolder?.children.forEach((node) => {
             if (node.folderName !== childToRemove) {
