@@ -31,12 +31,36 @@ class Pot {
          */
         arg_a += 1;
 
-        console.log('x' ,x);
-        console.log('y' ,y);
-        console.log('z' ,z);
-        console.log('a' ,a);
-        console.log('arg_a' ,arg_a);
-        console.log('----');
+        /*
+         * Return a closure
+         */
+        return (new_a = undefined, new_z = undefined, new_y = undefined) => {
+            if (new_a) {
+                a = new_a;
+            }
+            if (new_z) {
+                z = new_z;
+            }
+            if (new_y) {
+                y = new_y;
+            }
+            classLog();
+        }
+
+        /*
+         * Closure not accessible from outside.
+         * Called from the closure that is returned
+         * by main()
+         *
+         */
+        function classLog() {
+            console.log('x' ,x);
+            console.log('y' ,y);
+            console.log('z' ,z);
+            console.log('a' ,a);
+            console.log('arg_a' ,arg_a);
+            console.log('----');
+        }
     }
 }
 
@@ -58,6 +82,12 @@ var a = 4;
 
 log();
 const myObject = new Pot();
-myObject.main(a, a);
+const innerLog = myObject.main(a, a);
 log();
+const callInnerLog = (logFunc) => {
+    logFunc('abc', '123', 'foo');
+}
 
+callInnerLog(innerLog);
+innerLog();
+log();
