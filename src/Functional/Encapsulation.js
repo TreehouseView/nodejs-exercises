@@ -8,7 +8,11 @@
 
 /**
  * Set standard format for 
- * generic message
+ * generic message.
+ *
+ * This will be the function we want
+ * to encapsulate and reuse in other
+ * functions
  */
 function format(msg) {
     return Date.now() + "::" + msg;
@@ -30,15 +34,22 @@ function fileWriter(msg) {
 }
 
 /**
- * Dynamically create a function
- * with custom behavior based on
- * function arguments passed.
+ * Dynamically create a logger function
+ * based on the writer and formatter
+ * functions provided.
  */
-function logger(writer, format) {
+function logger(writer, formatter) {
     return (msg) => {
-        writer(format(msg));
+        writer(formatter(msg));
     }
 }
+
+/*
+Make use of the simple functions above by 
+combining them together.
+*/
+let consoleLogger = logger(consoleWriter, format);
+let fileLogger = logger(fileWriter, format);
 
 /**
  * For other languages that do not support returning
@@ -52,11 +63,5 @@ function fileLoggerFunc(msg) {
     fileWriter(format(msg));
 }
 
-/*
-Make use of the simple functions above by 
-combining them together.
-*/
-let consoleLogger = logger(consoleWriter, format);
-let fileLogger = logger(fileWriter, format);
 consoleLogger('Foo');
 consoleLoggerFunc('Foo');
