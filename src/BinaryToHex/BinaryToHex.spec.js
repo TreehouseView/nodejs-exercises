@@ -8,6 +8,7 @@ describe('BinaryToHex', () => {
     });
     test('Should Convert 1 char Length Binary', () => {
         expect(sut('0')).toBe('0');
+        expect(sut('000')).toBe('0');
         expect(sut('1')).toBe('1');
     });
     test('Should Convert Binary with Leading Zeroes', () => {

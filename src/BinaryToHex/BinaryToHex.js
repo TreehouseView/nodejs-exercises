@@ -4,54 +4,64 @@
  * Convert string binary to hex equivalent
  */
 function BinaryToHex(binaryInput) {
-    var hexResult = '';
-    let iterator = 0;
-    let multiplier = 1;
+
+    let hexResult = '';
     let accumulator = 0;
+    let counter = 0;
+    let multiplier = 1;
+    let result = '';
+    let invalid = false;
 
-    if (binaryInput == '0') {
-        hexResult = '0';
-    }
+    // Loop through input in reverse
+    for (let x = binaryInput.length-1; x>=0;x--) {
 
-    for (let x=binaryInput.length-1;x>=0;x--) {
-
-        // Validate
-        if (binaryInput[x] != '1'
-          && binaryInput[x] != '0') {
+        // Validation
+        if (binaryInput[x] !== '1'
+          && binaryInput[x] !== '0') {
             hexResult = '';
-            accumulator = 0;
+            invalid = true;
             break;
         }
-
-        // Compute
+        
+        // Compute base number
+        // and accumulate
         accumulator += binaryInput[x] * multiplier;
 
-        // Iterate
-        iterator++;
+        // Iterate counters
         multiplier = multiplier * 2;
-        
-        // Evaluate
-        if (iterator%4 == 0) {
+        counter++;
+    
+        // Evaluate if accumulated
+        // 4 values then:
+        //  1. Get hex value
+        //  2. reset counter
+        if (counter % 4 == 0) {
             hexResult += getHexValue(accumulator);
             multiplier = 1;
             accumulator = 0;
         }
     }
-
-    if (accumulator > 0) {
+   
+    // If there is trailing
+    // get hex value
+    if (accumulator > 0
+     || (!invalid
+     && hexResult.length == 0
+         && binaryInput.length > 0)) {
         hexResult += getHexValue(accumulator);
     }
 
-    //unravel stack
-    let result = '';
+    // Unravel stack
     for (let x=hexResult.length-1;x>=0;x--) {
         result += hexResult[x];
     }
+    
     return result;
 }
 
 function getHexValue(decimal) {
-    if (decimal >= 0 && decimal <= 9) {
+    if (decimal >= 0
+      && decimal <= 9) {
         return decimal;
     }
     switch (decimal) {
@@ -68,32 +78,8 @@ function getHexValue(decimal) {
         case 15:
             return 'F';
     }
-
+    return null;
 }
 
-module.exports.BinaryToHex = BinaryToHex;
 
-/*
-console.log(BinaryToHex('1010101010101010')); // 0xAAAA
-console.log('====');
-console.log(BinaryToHex('10101010101010')); // 0x2AAA
-console.log('====');
-console.log(BinaryToHex('000111010')); // 0x3A
-console.log('====');
-console.log(BinaryToHex('0')); // 0x0
-console.log('====');
-console.log(BinaryToHex('1')); // 0x1
-console.log('====');
-console.log(BinaryToHex('1111')); // 0xF
-console.log('====');
-console.log(BinaryToHex('111111111111')); // 0xFFF
-console.log('====');
-console.log(BinaryToHex('1')); // 0x1
-console.log('====');
-console.log(BinaryToHex('10')); // 0x2
-console.log('====');
-console.log(BinaryToHex('10000')); // 0x10
-console.log('====');
-console.log(BinaryToHex('100000')); // 0x20
-console.log('====');
-*/
+module.exports.BinaryToHex = BinaryToHex;
