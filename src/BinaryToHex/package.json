@@ -1,0 +1,19 @@
+{
+  "name": "binarytohex",
+  "version": "1.0.0",
+  "description": "",
+  "main": "BinaryToHex.js",
+  "dependencies": {
+    "jest": "^26.4.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@git.treehouse.pvt/var/git/nodejs-exercises"
+  },
+  "author": "",
+  "license": "ISC"
+}

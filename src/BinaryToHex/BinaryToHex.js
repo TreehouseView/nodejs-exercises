@@ -15,10 +15,18 @@ function BinaryToHex(binaryInput) {
 
     for (let x=binaryInput.length-1;x>=0;x--) {
 
+        // Validate
+        if (binaryInput[x] != '1'
+          && binaryInput[x] != '0') {
+            hexResult = '';
+            accumulator = 0;
+            break;
+        }
+
         // Compute
         accumulator += binaryInput[x] * multiplier;
 
-        //Iterate
+        // Iterate
         iterator++;
         multiplier = multiplier * 2;
         
@@ -63,6 +71,9 @@ function getHexValue(decimal) {
 
 }
 
+module.exports.BinaryToHex = BinaryToHex;
+
+/*
 console.log(BinaryToHex('1010101010101010')); // 0xAAAA
 console.log('====');
 console.log(BinaryToHex('10101010101010')); // 0x2AAA
@@ -85,3 +96,4 @@ console.log(BinaryToHex('10000')); // 0x10
 console.log('====');
 console.log(BinaryToHex('100000')); // 0x20
 console.log('====');
+*/
